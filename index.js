@@ -8,3 +8,13 @@ class Recipe {
         this.cookingTime = cookingTime;
     }
 }
+
+// calls main
+main()
+
+
+// to keep orginized / used for initializing webpage
+function main(){
+    return 0;
+}
+
