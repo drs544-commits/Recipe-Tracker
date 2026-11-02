@@ -14,25 +14,36 @@ class Recipe {
     toggleFavoriteStatus() {
         this.#isFavorite = !this.#isFavorite;
     }
+    getInfo() {
+        return this.recipeName + ", " +
+        this.ingredients + ", " +
+        this.steps + ", " +
+        this.category + ", " +
+        this.cookingTime + ", " +
+        this.#isFavorite;
+    }
 }
 
 // calls main
 main()
 
-// addRecipe form submition
 $("#addRecipeForm").on('submit', function(event){
-    // prevents reloading from sumbition
+    // Stop the page from reloading
     event.preventDefault();
+});
+
+// addRecipe form submition
+function addRecipe() {
     // create recipe object
     var newRecipe = new Recipe(
-        $(this).find("input[name='recipe-name']"),
-        $(this).find("input[name='ingredients']"),
-        $(this).find("input[name='steps']"),
-        $(this).find("input[name='category']"),
-        $(this).find("input[name='cooking-time']")
+        $("input[name='recipe-name']").val(),
+        $("input[name='ingredients']").val(),
+        $("input[name='steps']").val(),
+        $("input[name='category']").val(),
+        $("input[name='cooking-time']").val(),
     );
-    addRecipe(newRecipe);
-})
+    //addRecipe(newRecipe);
+}
 
 // TODO: dynamically create recipes on the webpage
 // adding a recipe object to the page 
@@ -44,6 +55,5 @@ $("#addRecipeForm").on('submit', function(event){
 
 // to keep orginized / used for initializing webpage
 function main(){
-    return 0;
 }
 
