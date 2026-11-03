@@ -11,10 +11,16 @@
     crossorigin="anonymous">
   </head>
   <body>
-    <form id="addRecipeForm" onsubmit="addRecipe()">
+    <!--where recipe cards will be dynamically added-->
+    <div id="recipe-cards"></div>
+    <!--form to add new recipes-->
+    <form id="addRecipeForm" onsubmit="createRecipe()">
       <input type="text" name="recipe-name" placeholder="Recipe Name">
       <input type="text" name="ingredients" placeholder="Ingredients">
-      <input type="text" name="steps" placeholder="Steps">
+      <form id="addStepForm" onsubmit="addStep()">
+        <input type="text" name="steps" placeholder="Step">
+        <button type="submit">Add Step</button>
+      </form>
       <input type="text" name="category" placeholder="Category">
       <input type="text" name="cooking-time" placeholder="Cooking Time">
       <button type="submit">Add Recipe</button>
