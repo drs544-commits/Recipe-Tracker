@@ -42,7 +42,8 @@ $("#addRecipeForm").on('submit', function(event){
 });
 
 function addStep(){
-    curSteps.append($());
+    curSteps.push($("input[name='steps']").val());
+    $("#stepsList").append($("<li>" + $("input[name='steps']").val() + "</li>"))
 }
 
 // addRecipe form submition
@@ -51,10 +52,11 @@ function createRecipe() {
     var newRecipe = new Recipe(
         $("input[name='recipe-name']").val(),
         $("input[name='ingredients']").val(),
-        $("input[name='steps']").val(),
+        curSteps.slice(),
         $("input[name='category']").val(),
         $("input[name='cooking-time']").val()
     );
+    curSteps = []
     addRecipe(newRecipe);
 }
 
