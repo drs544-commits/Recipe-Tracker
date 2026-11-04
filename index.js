@@ -47,7 +47,7 @@ function addStep(){
 }
 
 // addRecipe form submition
-function createRecipe() {
+function createRecipe(){
     // create recipe object
     var newRecipe = new Recipe(
         $("input[name='recipe-name']").val(),
@@ -56,7 +56,14 @@ function createRecipe() {
         $("input[name='category']").val(),
         $("input[name='cooking-time']").val()
     );
+    //clear the array for the steps
     curSteps = []
+    //convert the recipie to a string with JSON
+    let recipeString = JSON.stringify(newRecipe);
+    // store the recipe in local storage, the first argument is uses the recipe name as the key,
+    //The second argument saves the recipe object string into the local storage
+    localStorage.setItem(newRecipe.recipeName, recipeString);
+    // add the recipe to the page
     addRecipe(newRecipe);
 }
 
@@ -88,6 +95,32 @@ function addRecipe(newRecipe){
     $("#recipe-cards").append(recipeCard);
 }
 
+//function to load the recipies from the local storage
+function LoadRecipes() {
+    //if the local storage is not empty
+    if (localStorage.length > 0) {
+        //loop over the data in local storage
+        for (var i = 0; i < localStorage.length; i++){
+            //get the value for the current item
+            var value = localStorage.getItem(localStorage.key(i));
+            //This turns the string back into a recipe object
+            var recipe = JSON.parse(value);
+            //add the recipe to the page
+            addRecipe(recipe);
+        }
+    }
+
+}
+
+//clear local storage function
+function clearLocalStorage() {
+    //clear the local storage
+    localStorage.clear();
+    //refresh the page
+    location.reload();
+}
 // to keep orginized / used for initializing webpage
-function main(){}
+function main(){
+    LoadRecipes();
+}
 
