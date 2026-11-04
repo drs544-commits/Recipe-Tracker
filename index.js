@@ -111,6 +111,14 @@ function LoadRecipes() {
     }
 
 }
+
+//clear local storage function
+function clearLocalStorage() {
+    //clear the local storage
+    localStorage.clear();
+    //refresh the page
+    location.reload();
+}
 // to keep orginized / used for initializing webpage
 function main(){
     LoadRecipes();
