@@ -122,13 +122,15 @@ function LoadRecipes() {
 
 }
 
-//clear local storage function
-function clearLocalStorage() {
-    //clear the local storage
-    localStorage.clear();
-    //refresh the page
-    location.reload();
-}
+//listener when double clicking on a recipe card
+$(".recipe-card").on('dblclick', function(){
+    let recipeName = $(this).children(".card-body").children(".card-title").text();
+    //open the recipe details page and pass the recipe name as an argument
+    //the ? after the html page allows an argument to be passed to the next page
+    window.location.href = "recipeDetails.html?recipeName=" + recipeName;
+
+});
+
 // to keep orginized / used for initializing webpage
 function main(){
     LoadRecipes();
