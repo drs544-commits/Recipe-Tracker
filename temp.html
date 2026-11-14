@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Food Recipe Tracker homepage and recipe dashboard">
+  <title>Food Recipe Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#home" class="brand" aria-label="Food Recipe Tracker home">🍽️ Food Recipe Tracker</a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mainNav">☰ <span class="sr-only">Toggle navigation</span></button>
+      <nav id="mainNav" class="main-nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#all-recipes">All Recipes</a>
+        <a href="#favorites">Favorites</a>
+        <a class="button primary" id="createRecipeButton">New Recipe</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home" class="container">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div>
+        <p class="eyebrow">Your personal recipe collection</p>
+        <h1 id="heroTitle">Welcome to Food Recipe Tracker</h1>
+        <p>Keep your favorite meals in one place. Browse recipes, see your collection at a glance, and open step-by-step cooking directions.</p>
+        <a class="button primary" href="#all-recipes">Explore Recipes</a>
+      </div>
+      <div class="hero-illustration" role="img" aria-label="Illustration of a bowl of food">🥗</div>
+    </section>
+
+    <section id="dashboard" class="section" aria-labelledby="dashboardTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Collection overview</p>
+          <h2 id="dashboardTitle">Recipe Dashboard</h2>
+        </div>
+      </div>
+      <div class="stats">
+        <article class="stat-card">
+          <span class="stat-icon">📚</span>
+          <p>Total Recipes</p>
+          <strong id="totalRecipes">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon">🗂️</span>
+          <p>Categories</p>
+          <strong id="categoryCount">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon">❤️</span>
+          <p>Favorites</p>
+          <strong id="favoriteCount">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon">🕒</span>
+          <p>Recently Added</p>
+          <strong id="recentCount">0</strong>
+        </article>
+      </div>
+      <p class="muted small-note">Recently Added counts recipes added in the past 7 days.</p>
+    </section>
+
+    <section id="all-recipes" class="section" aria-labelledby="recipesTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Find something delicious</p>
+          <h2 id="recipesTitle">All Recipes</h2>
+        </div>
+        <span id="recipeCountLabel" class="counter"></span>
+      </div>
+      <div id="recipeGrid" class="recipe-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="favorites" class="section" aria-labelledby="favoritesTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Meals you love</p>
+          <h2 id="favoritesTitle">Favorite Recipes</h2>
+        </div>
+      </div>
+      <div id="favoritesGrid" class="recipe-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year">2026</span> Food Recipe Tracker · Class group project</p>
+  </footer>
+
+  <dialog id="recipeDialog" class="recipe-dialog" aria-labelledby="detailTitle">
+    <div class="dialog-layout">
+      <button id="closeDialog" class="close-button" type="button" aria-label="Close recipe details">x</button>
+      <div id="detailImage" class="detail-image"></div>
+      <div class="detail-content">
+        <p class="eyebrow" id="detailCategory"></p>
+        <h2 id="detailTitle"></h2>
+        <div class="detail-meta">
+          <span id="detailPrep"></span>
+          <span id="detailCook"></span>
+          <span id="detailServings"></span>
+        </div>
+        <h3>Ingredients</h3>
+        <ul id="detailIngredients"></ul>
+        <h3>Instructions</h3>
+        <ol id="detailSteps"></ol>
+      </div>
+    </div>
+  </dialog>
+  <!--import bootstrap-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <!--import jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!--import JS file-->
+  <script src="./index.js"></script>
+</body>
+</html>
