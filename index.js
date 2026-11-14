@@ -28,8 +28,18 @@ class Recipe {
 // current forms steps 
 var curSteps = [];
 
+const dialog = document.getElementById("recipeDialog");
+
 // calls main
 main();
+
+$("#create-recipe-button").on('click', function(){
+    dialog.showModal();
+});
+
+$("#closeDialog").on('click', function(){
+    dialog.close();
+});
 
 $("#addStepForm").on('submit', function(event){
     // Stop the page from reloading
@@ -71,7 +81,7 @@ function createRecipe(){
 function addRecipe(newRecipe){
     // build pieces of card
     var recipeCard = $("<div></div>", {
-        class: "card",
+        class: " card recipe-card",
         style: "width: 18rem;"
     });
     var cardImg = $("<img>",{
