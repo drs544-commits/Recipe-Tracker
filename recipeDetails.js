@@ -1,3 +1,31 @@
+class Recipe {
+    #isFavorite = false;
+    // TODO: add image member that stores an image file path
+    constructor(recipeName, ingredients, steps, category, cookingTime, image){
+        this.recipeName = recipeName;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.category = category;
+        this.cookingTime = cookingTime;
+        this.image = image;
+    }
+    getFavoriteStatus() {
+        return this.#isFavorite;
+    }
+    toggleFavoriteStatus() {
+        this.#isFavorite = !this.#isFavorite;
+    }
+    getInfo() {
+        return this.recipeName + ", " +
+        this.ingredients + ", " +
+        this.steps + ", " +
+        this.category + ", " +
+        this.cookingTime + ", " +
+        this.image + ", " +
+        this.#isFavorite;
+    }
+}
+
 function addRecipe(newRecipe){
     // build pieces of card
     var unorderedList = $("<ul></ul>");
@@ -79,10 +107,47 @@ function initializeDialog(){
 
 }
 
+$("#createRecipeForm").on("submit", function(event) {
+    event.preventDefault();
+    editRecipe();
+});
+
 //function to edit the recipe
-function editRecipe(recipe_name){
+function editRecipe(){
+    //get the current recipe name from the page
+    const recipe_name = getRecipeParam('recipeName');
+    //remove the old recipe from local storage
+    localStorage.removeItem(recipe_name);
+    //create the new recipe
+    let newRecipe = createRecipe();
+    //add the item to local storage
+    //convert the recipie to a string with JSON
+    let recipeString = JSON.stringify(newRecipe);
+    // store the recipe in local storage, the first argument is uses the recipe name as the key,
+    //The second argument saves the recipe object string into the local storage
+    localStorage.setItem(newRecipe.recipeName, recipeString);
+    //reload the page with a new argument
+    window.location.href = "recipeDetails.html?recipeName=" + encodeURIComponent(newRecipe.recipeName);
+
     
 } 
+
+function createRecipe(){
+    // create recipe object
+    var newRecipe = new Recipe(
+        $("input[name='recipe-name']").val(),
+        $("textarea[name='ingredients']").val().split("\n"),
+        $("textarea[name='steps']").val().split("\n"),
+        $("input[name='category']").val(),
+        $("input[name='cooking-time']").val(),
+        $("select[name='image']").val()
+    );
+    //clear the array for the steps and ingredients
+    curSteps = [];
+    curIngredients = [];
+    return newRecipe;
+}
+
 
 //function takes in a name for a parameter in a Url query
 function getRecipeParam(recipeName){
@@ -96,6 +161,7 @@ function getRecipeParam(recipeName){
 function main(){
     //get the recipe_name passed as a parameter by the URL
     const recipe_name = getRecipeParam('recipeName');
+    console.log("Stored recipe:", localStorage.getItem(recipe_name));
     //load the recipe
     let recipe = LoadRecipe(recipe_name);
     //add the recipe to the page

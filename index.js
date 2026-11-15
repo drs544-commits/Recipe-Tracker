@@ -150,8 +150,8 @@ $(document).on('click', '.delete', function(){
 $(".recipe-card").on('dblclick', function(){
     let recipeName = $(this).children(".card-body").children(".card-title").text();
     //open the recipe details page and pass the recipe name as an argument
-    //the ? after the html page allows an argument to be passed to the next page
-    window.location.href = "recipeDetails.html?recipeName=" + recipeName;
+    //the ? after the html page allows an argument to be passed to the next page and the encodeURI function makes the name into a safe string for the URL
+    window.location.href = "recipeDetails.html?recipeName=" + encodeURIComponent(recipeName);
 
 });
 
