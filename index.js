@@ -97,11 +97,26 @@ function addRecipe(newRecipe){
         text: newRecipe.recipeName,
         class: "card-title"
     });
+        var category =  $("<p></p>",{
+        text: newRecipe.category,
+        class: "card-text"
+    });
+    var cookingTime = $("<p></p>",{
+        text: newRecipe.cookingTime,
+        class: "card-text"
+    });
+    var deleteButton = $("<button></button>",{
+        text: "Delete",
+        class: "btn delete"
+    });
     // build card element
-    $(cardBody).append(cardTitle);    
+    $(cardBody).append(cardTitle);
+    $(cardBody).append(category);
+    $(cardBody).append(cookingTime);
+    $(cardBody).append(deleteButton);    
     $(recipeCard).append(cardImg);    
     $(recipeCard).append(cardBody);    
-    // inject card element
+    //inject card element
     $("#recipe-cards").append(recipeCard);
 }
 
@@ -116,19 +131,32 @@ function LoadRecipes() {
             //This turns the string back into a recipe object
             var recipe = JSON.parse(value);
             //add the recipe to the page
+            console.log(recipe)
             addRecipe(recipe);
+            
         }
     }
 
 }
 
-//clear local storage function
-function clearLocalStorage() {
-    //clear the local storage
-    localStorage.clear();
-    //refresh the page
-    location.reload();
-}
+//listener for delete button
+$(document).on('click', '.delete', function(){
+//listener when double clicking on a recipe card
+    //get the recipe name from the card
+    let recipeName = $(this).parent().children(".card-title").text();
+    //remove the recipe from local storage
+    localStorage.removeItem(recipeName);
+    //remove the recipe card from the page
+    this.parentElement.parentElement.remove();
+});
+$(".recipe-card").on('dblclick', function(){
+    let recipeName = $(this).children(".card-body").children(".card-title").text();
+    //open the recipe details page and pass the recipe name as an argument
+    //the ? after the html page allows an argument to be passed to the next page
+    window.location.href = "recipeDetails.html?recipeName=" + recipeName;
+
+});
+
 // to keep orginized / used for initializing webpage
 function main(){
     LoadRecipes();
