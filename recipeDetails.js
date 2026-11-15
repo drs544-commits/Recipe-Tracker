@@ -1,56 +1,155 @@
+class Recipe {
+    #isFavorite = false;
+    // TODO: add image member that stores an image file path
+    constructor(recipeName, ingredients, steps, category, cookingTime, image){
+        this.recipeName = recipeName;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.category = category;
+        this.cookingTime = cookingTime;
+        this.image = image;
+    }
+    getFavoriteStatus() {
+        return this.#isFavorite;
+    }
+    toggleFavoriteStatus() {
+        this.#isFavorite = !this.#isFavorite;
+    }
+    getInfo() {
+        return this.recipeName + ", " +
+        this.ingredients + ", " +
+        this.steps + ", " +
+        this.category + ", " +
+        this.cookingTime + ", " +
+        this.image + ", " +
+        this.#isFavorite;
+    }
+}
+
 function addRecipe(newRecipe){
     // build pieces of card
-    var recipe = $("<div></div>", {
-        class: "card recipe-card",
-        style: "width: 18rem;"
-    });
+    var unorderedList = $("<ul></ul>");
+    var orderedList = $("<ol></ol>");
     var cardImg = $("<img>",{
         src: newRecipe.image,
-        class: "card-img-top",
+        width: "10rem",
         alt: newRecipe.recipeName + " image"
     });
-    var cardBody = $("<div></div>",{
-        class: "card-body",
-    });
-    var cardTitle = $("<h5></h5>",{
+    var cardTitle = $("<h1></h1>",{
         text: newRecipe.recipeName,
-        class: "card-title"
+        class: "name"
     });
-    var category =  $("<p></p>",{
-        text: newRecipe.category,
-        class: "card-text"
+    var category =  $("<h2></h2>",{
+        text: "Category: " + newRecipe.category,
+        class: "category"
     });
-    var cookingTime = $("<p></p>",{
-        text: newRecipe.cookingTime,
-        class: "card-text"
+    var cookingTime = $("<h3></h3>",{
+        text: "Cooking Time(minutes): " + newRecipe.cookingTime,
+        class: "cooking-time"
     });
-    var ingredients = $("<p></p>",{
-        text: newRecipe.ingredients,
-        class: "card-text"
+    for (var i = 0; i < newRecipe.ingredients.length; i++){
+        unorderedList.append($("<li></li>",{
+            text: newRecipe.ingredients[i]
+        }));
+    }
+    for (var i = 0; i < newRecipe.steps.length; i++){
+        orderedList.append($("<li></li>",{
+            text: newRecipe.steps[i]
+        }));
+    }
+    var edit_button = $("<button></button>",{
+        id: "edit_button",
+        class: "btn btn-success",
+        type: "button",
+        text: "Edit Recipe"
     });
-    var steps = $("<p></p>",{
-        text: newRecipe.steps,
-        class: "card-text"
-    });
+
     // build card element
-    $(cardBody).append(cardTitle);
-    $(cardBody).append(category);    
-    $(cardBody).append(cookingTime);    
-    $(cardBody).append(ingredients);    
-    $(cardBody).append(steps);    
-    $(recipe).append(cardImg);    
-    $(recipe).append(cardBody);    
-    // inject card element
-    $("#recipe-card").append(recipe);
+    $("#lesser-details").append(cardTitle);
+    $("#lesser-details").append(category);    
+    $("#lesser-details").append(cookingTime); 
+    $("#lesser-details").append(edit_button);
+    $("#ingredients").append(unorderedList);    
+    $("#instructions").append(orderedList);    
+    $("#image-container").append(cardImg);    
 }
 
 function LoadRecipe(recipe_name) {
     var value = localStorage.getItem(recipe_name);
     //This turns the string back into a recipe object
     var recipe = JSON.parse(value);
-    //add the recipe to the page
-    addRecipe(recipe);
+    //return the recipe object
+    return recipe;
 }
+
+const dialog = document.getElementById("recipeDialog");
+
+$("#closeDialog").on('click', function(){
+    dialog.close();
+});
+
+
+function initializeDialog(){
+    //get the current recipe name from the page
+    const recipe_name = getRecipeParam('recipeName');
+    //load the recipe
+    let recipe = LoadRecipe(recipe_name);
+    //set the value for the name the same as the recipe name
+    $("input[name='recipe-name']").val(recipe.recipeName);
+    //set the value for the category to the same as the recipe category
+    $("input[name='category']").val(recipe.category);
+    //set the value for the ingredients to the same as the recipe ingredients
+    $("textarea[name='ingredients']").val(recipe.ingredients.join("\n"));
+    //set the value for the steps to the same as the recipe steps
+    $("textarea[name='steps']").val(recipe.steps.join("\n"));
+    //set the value for the cooking time to the same as the recipe cooking time
+    $("input[name='cooking-time']").val(recipe.cookingTime);
+    //set the value for the image to the same as the recipe image
+    $("select[name='image']").val(recipe.image);
+
+}
+
+$("#createRecipeForm").on("submit", function(event) {
+    event.preventDefault();
+    editRecipe();
+});
+
+//function to edit the recipe
+function editRecipe(){
+    //get the current recipe name from the page
+    const recipe_name = getRecipeParam('recipeName');
+    //remove the old recipe from local storage
+    localStorage.removeItem(recipe_name);
+    //create the new recipe
+    let newRecipe = createRecipe();
+    //add the item to local storage
+    //convert the recipie to a string with JSON
+    let recipeString = JSON.stringify(newRecipe);
+    // store the recipe in local storage, the first argument is uses the recipe name as the key,
+    //The second argument saves the recipe object string into the local storage
+    localStorage.setItem(newRecipe.recipeName, recipeString);
+    //reload the page with a new argument
+    window.location.href = "recipeDetails.html?recipeName=" + encodeURIComponent(newRecipe.recipeName);
+
+    
+} 
+
+function createRecipe(){
+    // create recipe object
+    var newRecipe = new Recipe(
+        $("input[name='recipe-name']").val(),
+        $("textarea[name='ingredients']").val().split("\n"),
+        $("textarea[name='steps']").val().split("\n"),
+        $("input[name='category']").val(),
+        $("input[name='cooking-time']").val(),
+        $("select[name='image']").val()
+    );
+    //clear the array for the steps and ingredients
+    curSteps = [];
+    curIngredients = [];
+    return newRecipe;
+}
+
 
 //function takes in a name for a parameter in a Url query
 function getRecipeParam(recipeName){
@@ -64,9 +163,16 @@ function getRecipeParam(recipeName){
 function main(){
     //get the recipe_name passed as a parameter by the URL
     const recipe_name = getRecipeParam('recipeName');
-    console.log(recipe_name)
+    console.log("Stored recipe:", localStorage.getItem(recipe_name));
     //load the recipe
-    LoadRecipe(recipe_name);
+    let recipe = LoadRecipe(recipe_name);
+    //add the recipe to the page
+    addRecipe(recipe);
 }   
 
 main();
+
+$("#edit_button").on('click', function(){
+    dialog.showModal();
+    initializeDialog();
+});
