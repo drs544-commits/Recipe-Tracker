@@ -5,10 +5,9 @@ function addRecipe(newRecipe){
         style: "width: 18rem;"
     });
     var cardImg = $("<img>",{
-        src: "",
+        src: newRecipe.image,
         class: "card-img-top",
-        // TODO: add img and alt text to recipe class
-        alt: ""
+        alt: newRecipe.recipeName + " image"
     });
     var cardBody = $("<div></div>",{
         class: "card-body",
