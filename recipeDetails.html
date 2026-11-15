@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang = "eng">
     <head>
+        <title>Recipe Details Page</title>
         <!--link the CSS file-->
         <link rel="stylesheet" href="./recipeDetails_styles.css"/>
         <!--linking Bootstrap-->
@@ -11,19 +12,25 @@
     </head>
     <body>
         <div id = navbar>
-            <a href = "index.html" id = "home-link">Home</a>
+            <nav>
+                <a href = "index.html" id = "home-link">Home</a>
+            </nav>
         </div>
         <!-- where the image of the food should go-->
         <div id = "image-container"></div>
         <!--where stuff like name, cook-time, and category will go-->
         <div id = "lesser-details"></div>
+
         <!--more important details seperated into their own containers-->
-        <div id = "ingredients"></div>
-        <div id = "instructions"></div>
+        <div class = "row bigger_details">   
+            <div id = "ingredients" class = "col-sm-6 col-"><h4>Ingredients</h4></div>
+            <div id = "instructions" class = "col-sm-6 col-"><h4>Instructions</h4></div>
+
+        </div>
+        
         </div>
 
 
-        <button id = "edit_button" type = "button">Edit Recipe</button>
         <!--dialog-->
         <dialog id="recipeDialog" class="recipe-dialog" aria-labelledby="addRecipeTitle">
             <div class="dialog-layout">

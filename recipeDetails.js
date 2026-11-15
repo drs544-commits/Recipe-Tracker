@@ -32,19 +32,19 @@ function addRecipe(newRecipe){
     var orderedList = $("<ol></ol>");
     var cardImg = $("<img>",{
         src: newRecipe.image,
-        width: "40%",
+        width: "10rem",
         alt: newRecipe.recipeName + " image"
     });
     var cardTitle = $("<h1></h1>",{
         text: newRecipe.recipeName,
         class: "name"
     });
-    var category =  $("<p></p>",{
-        text: newRecipe.category,
+    var category =  $("<h2></h2>",{
+        text: "Category: " + newRecipe.category,
         class: "category"
     });
-    var cookingTime = $("<p></p>",{
-        text: newRecipe.cookingTime,
+    var cookingTime = $("<h3></h3>",{
+        text: "Cooking Time(minutes): " + newRecipe.cookingTime,
         class: "cooking-time"
     });
     for (var i = 0; i < newRecipe.ingredients.length; i++){
@@ -57,11 +57,18 @@ function addRecipe(newRecipe){
             text: newRecipe.steps[i]
         }));
     }
+    var edit_button = $("<button></button>",{
+        id: "edit_button",
+        class: "btn btn-success",
+        type: "button",
+        text: "Edit Recipe"
+    });
 
     // build card element
     $("#lesser-details").append(cardTitle);
     $("#lesser-details").append(category);    
-    $("#lesser-details").append(cookingTime);    
+    $("#lesser-details").append(cookingTime); 
+    $("#lesser-details").append(edit_button);
     $("#ingredients").append(unorderedList);    
     $("#instructions").append(orderedList);    
     $("#image-container").append(cardImg);    
@@ -76,11 +83,6 @@ function LoadRecipe(recipe_name) {
 }
 
 const dialog = document.getElementById("recipeDialog");
-
-$("#edit_button").on('click', function(){
-    dialog.showModal();
-    initializeDialog();
-});
 
 $("#closeDialog").on('click', function(){
     dialog.close();
@@ -169,3 +171,8 @@ function main(){
 }   
 
 main();
+
+$("#edit_button").on('click', function(){
+    dialog.showModal();
+    initializeDialog();
+});

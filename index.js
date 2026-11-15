@@ -90,11 +90,11 @@ function addRecipe(newRecipe){
         class: "card-title"
     });
         var category =  $("<p></p>",{
-        text: newRecipe.category,
+        text: "Category: " + newRecipe.category,
         class: "card-text"
     });
     var cookingTime = $("<p></p>",{
-        text: newRecipe.cookingTime,
+        text: "Cooking Time(minutes): " + newRecipe.cookingTime,
         class: "card-text"
     });
     var deleteButton = $("<button></button>",{
