@@ -120,6 +120,15 @@
           Instructions <span class="muted">(one step per line)</span>
           <textarea name="steps" rows="5" required></textarea>
         </label>
+        <label>
+          Image
+          <select name="image" required>
+            <option value="" disabled selected>Select an image</option>
+            <option value="files/pasta.jpg">pasta</option>
+            <option value="files/soup.jpg">soup</option>
+            <option value="files/tacos.jpg">tacos</option>
+          </select>
+        </label>
         <div class="form-actions">
           <button class="button primary" type="submit" onclick="createRecipe()">Add recipe</button>
         </div>

@@ -2,12 +2,13 @@
 class Recipe {
     #isFavorite = false;
     // TODO: add image member that stores an image file path
-    constructor(recipeName, ingredients, steps, category, cookingTime){
+    constructor(recipeName, ingredients, steps, category, cookingTime, image){
         this.recipeName = recipeName;
         this.ingredients = ingredients;
         this.steps = steps;
         this.category = category;
         this.cookingTime = cookingTime;
+        this.image = image;
     }
     getFavoriteStatus() {
         return this.#isFavorite;
@@ -21,6 +22,7 @@ class Recipe {
         this.steps + ", " +
         this.category + ", " +
         this.cookingTime + ", " +
+        this.image + ", " +
         this.#isFavorite;
     }
 }
@@ -58,7 +60,8 @@ function createRecipe(){
         $("textarea[name='ingredients']").val().split("\n"),
         $("textarea[name='steps']").val().split("\n"),
         $("input[name='category']").val(),
-        $("input[name='cooking-time']").val()
+        $("input[name='cooking-time']").val(),
+        $("select[name='image']").val()
     );
     //clear the array for the steps and ingredients
     curSteps = [];
@@ -75,10 +78,9 @@ function addRecipe(newRecipe){
         style: "width: 18rem;"
     });
     var cardImg = $("<img>",{
-        src: "",
+        src: newRecipe.image,
         class: "card-img-top",
-        // TODO: add img and alt text to recipe class
-        alt: ""
+        alt: newRecipe.recipeName + " image"
     });
     var cardBody = $("<div></div>",{
         class: "card-body",
