@@ -1,7 +1,7 @@
+// Dyllon: task3 - create recipe onject
 // class for recipe information
 class Recipe {
     #isFavorite = false;
-    // TODO: add image member that stores an image file path
     constructor(recipeName, ingredients, steps, category, cookingTime, image){
         this.recipeName = recipeName;
         this.ingredients = ingredients;
@@ -27,6 +27,7 @@ class Recipe {
     }
 }
 
+//Dyllon: Task 1: enable form to create recipe card with javascript
 
 const dialog = document.getElementById("recipeDialog");
 
@@ -70,7 +71,8 @@ function createRecipe(){
     addRecipe(newRecipe);
 }
 
-// adding a recipe object to the page 
+//Dyllon: task4: create a recipe card and add to the list of recipes
+//adding a recipe object to the page 
 function addRecipe(newRecipe){
     // build pieces of card
     var recipeCard = $("<div></div>", {
@@ -110,6 +112,8 @@ function addRecipe(newRecipe){
     $(recipeCard).append(cardBody);    
     //inject card element
     $("#recipe-cards").prepend(recipeCard);
+    
+    //Corbin Task1: research and apply how to allow a user to save where they left off
     // placed here to place the recipe at the top of local storage
     //convert the recipie to a string with JSON
     let recipeString = JSON.stringify(newRecipe);
@@ -129,7 +133,6 @@ function LoadRecipes() {
             //This turns the string back into a recipe object
             var recipe = JSON.parse(value);
             //add the recipe to the page
-            console.log(recipe)
             addRecipe(recipe);
             
         }
@@ -137,6 +140,7 @@ function LoadRecipes() {
 
 }
 
+//Corbin task 3: delete the recipe 
 //listener for delete button
 $(document).on('click', '.delete', function(){
 //listener when double clicking on a recipe card
@@ -147,6 +151,8 @@ $(document).on('click', '.delete', function(){
     //remove the recipe card from the page
     this.parentElement.parentElement.remove();
 });
+
+//Corbin Task5: sharing information from page to page
 $(".recipe-card").on('dblclick', function(){
     let recipeName = $(this).children(".card-body").children(".card-title").text();
     //open the recipe details page and pass the recipe name as an argument

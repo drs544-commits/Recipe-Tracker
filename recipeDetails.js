@@ -1,6 +1,5 @@
 class Recipe {
     #isFavorite = false;
-    // TODO: add image member that stores an image file path
     constructor(recipeName, ingredients, steps, category, cookingTime, image){
         this.recipeName = recipeName;
         this.ingredients = ingredients;
@@ -88,7 +87,7 @@ $("#closeDialog").on('click', function(){
     dialog.close();
 });
 
-
+//Corbin Task 4
 function initializeDialog(){
     //get the current recipe name from the page
     const recipe_name = getRecipeParam('recipeName');
@@ -109,10 +108,6 @@ function initializeDialog(){
 
 }
 
-$("#createRecipeForm").on("submit", function(event) {
-    event.preventDefault();
-    editRecipe();
-});
 
 //function to edit the recipe
 function editRecipe(){
@@ -133,6 +128,11 @@ function editRecipe(){
 
     
 } 
+
+$("#createRecipeForm").on("submit", function(event) {
+    event.preventDefault();
+    editRecipe();
+});
 
 function createRecipe(){
     // create recipe object
@@ -172,6 +172,7 @@ function main(){
 
 main();
 
+//Corbin task2 event listener for edit button
 $("#edit_button").on('click', function(){
     dialog.showModal();
     initializeDialog();
